@@ -46,8 +46,10 @@ var randomChannel = new SseChannel({
 // Note that we're providing `send()` with an object here. Because we
 // told the channel to JSON-serialize all our data, this works just fine,
 // but we'll need to parse it on the client-side
+var sequenceCounter = 0;
 dataProvider.on('random', function(randomData) {
-    randomChannel.send({ data: randomData, event: 'randomNummer' });
+    randomChannel.send({ data: ++sequenceCounter, event: 'sequence' });
+    randomChannel.send({ data: randomData, event: 'random' });
     randomChannel.send({ data: randomData });
 });
 
